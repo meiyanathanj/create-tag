@@ -11,10 +11,9 @@ async function run(): Promise<void> {
       )
       return
     }
-    console.log(semver.valid(tag))
+    console.log(tag)
     const client = github.getOctokit(core.getInput('token'))
-    console.log('************github.context.repo')
-    console.log(github.context)
+
     const tag_rsp = await client.git.createTag({
       ...github.context.repo,
       tag,
@@ -26,7 +25,7 @@ async function run(): Promise<void> {
       core.setFailed(`Failed to create tag object (status=${tag_rsp.status})`)
       return
     }
-    console.log(tag_rsp)
+
     const ref_rsp = await client.git.createRef({
       ...github.context.repo,
       ref: `refs/tags/${tag}`,
@@ -36,9 +35,9 @@ async function run(): Promise<void> {
       core.setFailed(`Failed to create tag ref(status = ${tag_rsp.status})`)
       return
     }
-    console.log(ref_rsp)
+
     core.info(`Tagged ${tag_rsp.data.sha} as ${tag}`);
-    
+    core.setOutput('tag', tag)
   } catch (error) {
     core.setFailed(error.message)
   }
