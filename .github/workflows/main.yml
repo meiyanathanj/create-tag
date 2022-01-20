@@ -1,0 +1,42 @@
+name: tagging
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. v0.1.0)'
+        required: true
+      message:
+        description: 'Tag message'
+        required: true
+jobs:
+  build:
+    name: Create Tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Bump version and push tag
+        id: tag_version
+        uses: ./
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{github.event.inputs.version}}
+          message: ${{github.event.inputs.message}}
+      # - name: Create a Github Release
+      #  id: create_release
+      #  uses: actions/create-release@v1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      #  with:
+      #   tag_name: ${{ steps.tag_version.outputs.new_tag }}
+      #   release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+      #   body: ${{ steps.tag_version.outputs.changelog }}
+
+     
+      - name: Checking Result
+        run: |
+          echo "Branch - ${{github.ref}}"
+          
