@@ -4,15 +4,24 @@ import * as semver from 'semver'
 
 async function run(): Promise<void> {
   try {
-    const tag = core.getInput('version')
+    let tag = core.getInput('version')
+    const token = core.getInput('token');
+    const tagprefix = 'v';
+    
     if (semver.valid(tag) == null) {
       core.setFailed(
         `Tag ${tag} does not appear to be a valid semantic version`
       )
       return
     }
-    console.log(tag)
-    const client = github.getOctokit(core.getInput('token'))
+
+    let verregx = /^(\d+\.)?(\d+\.)?(\d+)$/
+    let tagres = verregx.test(tag);
+    if(tagres){
+      tag = `${tagprefix}${tag}`;
+    }
+   
+    const client = github.getOctokit(token)
 
     const tag_rsp = await client.git.createTag({
       ...github.context.repo,
@@ -37,7 +46,13 @@ async function run(): Promise<void> {
     }
 
     core.info(`Tagged ${tag_rsp.data.sha} as ${tag}`);
-    core.setOutput('tag', tag)
+    core.setOutput('latesttag', tag)
+    if(tag){ 
+      core.setOutput('status', 'Success')
+    }else{
+      core.setOutput('status', 'Failure')
+    }
+    
   } catch (error) {
     core.setFailed(error.message)
   }
