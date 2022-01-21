@@ -1,5 +1,5 @@
 # create-tag
-test,123
+test
 A GitHub Action to tag a commit with a valid semantic version.
 
 For example:
@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create Tag
-        uses: negz/create-tag@v1
+        uses: meiyanathanj/create-tag@v1
         with:
           version: ${{ github.event.inputs.version }}
           message: ${{ github.event.inputs.message }}
