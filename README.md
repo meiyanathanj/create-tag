@@ -1,5 +1,5 @@
 # create-tag
-
+test,123
 A GitHub Action to tag a commit with a valid semantic version.
 
 For example:
