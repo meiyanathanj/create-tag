@@ -18,7 +18,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Bump version and push tag
+        
+      - name: Version Generate
         id: tag_version
         uses: ./
         with: 
@@ -30,8 +31,8 @@ jobs:
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v1
         with:
-          toTag: ${{ steps.tag_version.outputs.latesttag }}
-          # configuration: "configuration.json"
+          # toTag: ${{ steps.tag_version.outputs.latesttag }}
+          configuration: "configuration.json"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
