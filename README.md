@@ -32,3 +32,10 @@ jobs:
           message: ${{ github.event.inputs.message }}
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+```
+Run => tsc src/main.ts 
+then test using below cmd
+
+node src/main.js
+```

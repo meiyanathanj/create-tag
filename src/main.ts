@@ -4,8 +4,8 @@ import * as semver from 'semver'
 
 async function run(): Promise<void> {
   try {
-    let tag = core.getInput('version')
-    const token = core.getInput('token');
+    let tag = 'v1.0.0';//core.getInput('version')
+    const token = '';//core.getInput('token');
     const tagprefix = 'v';
     
     if (semver.valid(tag) == null) {
@@ -14,7 +14,7 @@ async function run(): Promise<void> {
       )
       return
     }
-
+return;
     let verregx = /^(\d+\.)?(\d+\.)?(\d+)$/
     let tagres = verregx.test(tag);
     if(tagres){
