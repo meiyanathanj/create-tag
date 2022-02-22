@@ -5,9 +5,12 @@ import * as semver from 'semver'
 async function run(): Promise<void> {
   try {
     let tag = 'v1.0.0';//core.getInput('version')
-    const token = '';//core.getInput('token');
+    const token = core.getInput('token');
     const tagprefix = 'v';
-    
+    const { GITHUB_REF, GITHUB_SHA } = process.env;
+
+    console.log(GITHUB_SHA,'****', GITHUB_REF)
+    console.log(github.context)
     if (semver.valid(tag) == null) {
       core.setFailed(
         `Tag ${tag} does not appear to be a valid semantic version`
