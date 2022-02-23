@@ -27,6 +27,7 @@ jobs:
         id: tag_version
         uses: ./
         with: 
+          ref: ${{ github.event.inputs.action_branch }}
           token: ${{ secrets.GITHUB_TOKEN }}
           version: ${{github.event.inputs.version}}
           message: ${{github.event.inputs.message}}
