@@ -11,6 +11,9 @@ on:
       message:
         description: 'Tag message'
         required: true
+      action_branch:
+        description: 'BRANCH NAME'
+        required: true
 jobs:
   build:
     name: Create Tag
@@ -18,7 +21,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+        with: 
+          ref: ${{ github.event.inputs.action_branch }}
       - name: Version Generate
         id: tag_version
         uses: ./
